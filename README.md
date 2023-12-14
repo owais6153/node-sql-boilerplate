@@ -1,4 +1,4 @@
-# Node Boilerplate With SQL (Sequalize)
+# Node Boilerplate With SQL (Sequelize)
 
 # Pre-requisites
 
