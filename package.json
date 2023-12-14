@@ -16,7 +16,7 @@
     "prepare": "husky install"
   },
   "lint-staged": {
-    "*/**": "format:fix"
+    "*/**": "npm run format:fix"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
