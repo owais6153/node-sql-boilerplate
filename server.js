@@ -1,5 +1,7 @@
 const express = require('express')
 const cors = require('cors')
+const mainRoutes = require('./routes/v1/main')
+
 const path = require('path')
 const app = express()
 
@@ -13,9 +15,7 @@ app.use(
 )
 app.use('/public', express.static(path.join(__dirname, 'public')))
 
-app.get('/', function (req, res) {
-  res.json({ msg: 'App is running' })
-})
+app.use('/', mainRoutes)
 
 app.listen(PORT, function () {
   console.log(`Server listning to PORT: ${PORT}`)
