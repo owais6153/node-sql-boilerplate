@@ -1,7 +1,7 @@
 
 yarn.lock
 .DS_Store
-/public/uploads
+/public/uploads/*
 package-lock.json
 
 # Logs
