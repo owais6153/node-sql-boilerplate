@@ -38,7 +38,7 @@ app.use('/api-docs/v1', swaggerUI.serve, swaggerUI.setup(swagger_v1))
 app.use('/api/v1/auth', authRoutes)
 
 // Error boundary
-app.use((err, req, res) => {
+app.use((err, req, res, next) => {
   res.status(500).send({
     status: 500,
     error: {

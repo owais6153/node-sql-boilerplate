@@ -4,7 +4,7 @@ const isAuthenticated = require('../../middleware/auth')
 
 /**
  * @swagger
- * /auth/authenticate:
+ * /api/v1/auth/authenticate:
  *   post:
  *     summary: Authenticate User
  *     consumes:
@@ -38,7 +38,7 @@ router.post('/authenticate', authController.authenticate)
 
 /**
  * @swagger
- * /auth/me:
+ * /api/v1/auth/me:
  *   get:
  *     summary: Get My Profile
  *     consumes:
