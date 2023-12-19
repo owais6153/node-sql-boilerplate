@@ -10,7 +10,8 @@ const authRoutes = require('./routes/v1/auth')
 
 const PORT = process.env.PORT || 4000
 const CORS_ORIGIN = process.env.CORS_ORIGIN
-const jwtSecretKey = process.env.JWT_SECRET_KEY
+const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY
+const NODE_ENV = process.env.NODE_ENV || 'development'
 
 const app = express()
 
@@ -22,6 +23,7 @@ app.use(
 )
 // Logging in terminal
 app.use(morgan('dev'))
+
 app.use(
   express.urlencoded({
     extended: false,
@@ -32,6 +34,7 @@ app.use(express.json())
 // Static Paths
 app.use('/public', express.static(path.join(__dirname, 'public')))
 
+// Swagger Docs
 app.use('/api-docs/v1', swaggerUI.serve, swaggerUI.setup(swagger_v1))
 
 // Routes
@@ -49,10 +52,10 @@ app.use((err, req, res, next) => {
 
 // Serve
 app.listen(PORT, function () {
-  console.log(`Server listning to PORT: ${PORT}`)
+  console.log(`Server listning to PORT: ${PORT}, Enviroment: ${NODE_ENV}`)
 })
 
-if (!jwtSecretKey) {
-  console.error('FATAL ERROR: jwtSecretKey is not defined.')
+if (!JWT_SECRET_KEY) {
+  console.error('FATAL ERROR: JWT_SECRET_KEY is not defined.')
   process.exit(1)
 }
