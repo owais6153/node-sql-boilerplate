@@ -23,7 +23,7 @@ module.exports = {
       },
     })
   },
-  _200: (res, data, message) => {
+  _200: (res, data, message = 'Success') => {
     return res.status(200).send({
       status: 200,
       data,
