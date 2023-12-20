@@ -52,7 +52,7 @@ router.post('/authenticate', authController.authenticate)
  *       in: header
  *       required: true
  *       type: string
- *       description: an authorization header
+ *       description: Auth Token
  *     operationId: getUsers
  *     deprecated: false
  *     responses:

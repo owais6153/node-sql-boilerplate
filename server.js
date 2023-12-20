@@ -3,7 +3,7 @@ const express = require('express')
 const cors = require('cors')
 const morgan = require('morgan')
 const swaggerUI = require('swagger-ui-express')
-const { swagger_v1 } = require('./swagger/v1')
+const swaggerV1 = require('./swagger/v1')
 
 const path = require('path')
 const authRoutes = require('./routes/v1/auth')
@@ -22,7 +22,7 @@ app.use(
   })
 )
 // Logging in terminal
-app.use(morgan('dev'))
+if (NODE_ENV === 'development' || NODE_ENV === 'test') app.use(morgan('dev'))
 
 app.use(
   express.urlencoded({
@@ -35,7 +35,7 @@ app.use(express.json())
 app.use('/public', express.static(path.join(__dirname, 'public')))
 
 // Swagger Docs
-app.use('/api-docs/v1', swaggerUI.serve, swaggerUI.setup(swagger_v1))
+app.use('/api/v1/docs', swaggerUI.serve, swaggerUI.setup(swaggerV1))
 
 // Routes
 app.use('/api/v1/auth', authRoutes)

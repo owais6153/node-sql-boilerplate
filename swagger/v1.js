@@ -12,4 +12,4 @@ const options = {
   apis: ['./routes/v1/auth.js'],
 }
 
-module.exports.swagger_v1 = swaggerJsDoc(options)
+module.exports = swaggerJsDoc(options)
