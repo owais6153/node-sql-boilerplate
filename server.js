@@ -4,7 +4,6 @@ const cors = require('cors')
 const morgan = require('morgan')
 const swaggerUI = require('swagger-ui-express')
 const swaggerV1 = require('./swagger/v1')
-
 const path = require('path')
 const authRoutes = require('./routes/v1/auth')
 

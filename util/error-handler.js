@@ -23,10 +23,3 @@ exports.to = promise =>
       return [null, data]
     })
     .catch(err => [err])
-
-exports.throwError = (errMsg, log) => {
-  if (log === true) {
-    console.error(errMsg)
-  }
-  throw new Error(errMsg)
-}
