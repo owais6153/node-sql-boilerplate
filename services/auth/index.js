@@ -4,12 +4,23 @@ const { generateJWT } = require('../../util/generate-jwt')
 
 module.exports = {
   me: async userid => {
-    let user = await db.User.findOne({ where: { id: userid } })
+    let user = await db.User.findOne({
+      where: { id: userid },
+      attributes: {
+        include: [[db.sequelize.fn('COUNT', db.sequelize.col('Posts.id')), 'postCount']],
+        exclude: ['password'],
+      },
+      include: [
+        {
+          model: db.Post,
+          attributes: [],
+        },
+      ],
+      group: ['User.id'],
+    })
 
     if (!user) throw new Error('User not exsists')
 
-    user = JSON.parse(JSON.stringify(user))
-    delete user['password']
     return user
   },
   authenticate: async body => {
