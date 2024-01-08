@@ -1,4 +1,3 @@
-require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
 const morgan = require('morgan')
@@ -6,11 +5,9 @@ const swaggerUI = require('swagger-ui-express')
 const swaggerV1 = require('./swagger/v1')
 const path = require('path')
 const authRoutes = require('./routes/v1/auth')
+const config = require('./config/app')
 
-const PORT = process.env.PORT || 4000
-const CORS_ORIGIN = process.env.CORS_ORIGIN
-const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY
-const NODE_ENV = process.env.NODE_ENV || 'development'
+const { PORT, CORS_ORIGIN, JWT_SECRET_KEY, NODE_ENV } = config
 
 const app = express()
 
@@ -34,10 +31,10 @@ app.use(express.json())
 app.use('/public', express.static(path.join(__dirname, 'public')))
 
 // Swagger Docs
-app.use('/api/v1/docs', swaggerUI.serve, swaggerUI.setup(swaggerV1))
+app.use(`${config.API_PREFIX}/docs`, swaggerUI.serve, swaggerUI.setup(swaggerV1))
 
 // Routes
-app.use('/api/v1/auth', authRoutes)
+app.use(`${config.API_PREFIX}/auth`, authRoutes)
 
 // Error boundary
 app.use((err, req, res, next) => {
