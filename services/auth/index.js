@@ -1,10 +1,14 @@
 const bcrypt = require('bcryptjs')
 const db = require('../../models')
+
+const UserRepository = require('../../repositories/user')
 const { generateJWT } = require('../../util/generate-jwt')
 
 module.exports = {
   me: async userid => {
-    let user = await db.User.findOne({
+    const userRepo = new UserRepository()
+
+    await userRepo.findOne({
       where: { id: userid },
       attributes: {
         include: [[db.sequelize.fn('COUNT', db.sequelize.col('Posts.id')), 'postCount']],
@@ -18,15 +22,20 @@ module.exports = {
       ],
       group: ['User.id'],
     })
-
+    if (!userRepo.isSuccess()) throw new Error(!userRepo.getError())
+    let user = userRepo.getResult()
     if (!user) throw new Error('User not exsists')
 
     return user
   },
   authenticate: async body => {
     const { email, password } = body
-    let user = await db.User.findOne({ where: { email } })
+    const userRepo = new UserRepository()
 
+    await userRepo.findByEmail(email)
+    if (!userRepo.isSuccess()) throw new Error(!userRepo.getError())
+
+    let user = userRepo.getResult()
     if (!user) throw new Error('Wrong email or password')
 
     const isCorrectPassword = await bcrypt.compare(password, user.password)
@@ -44,27 +53,29 @@ module.exports = {
     const t = await db.sequelize.transaction()
     try {
       const { firstName, lastName, email, password } = body
-      let userExistByEmail = await db.User.findOne({
-        where: { email },
-      })
+      const userRepo = new UserRepository()
+
+      await userRepo.findByEmail(email)
+      if (!userRepo.isSuccess()) throw new Error(!userRepo.getError())
+
+      let userExistByEmail = userRepo.getResult()
       if (userExistByEmail) throw new Error('An account using this email already exists')
 
       const salt = await bcrypt.genSalt(10)
       const hashedPassword = await bcrypt.hash(password, salt)
 
-      let userCreated = await db.User.create(
-        {
-          email,
-          password: hashedPassword,
-          firstName,
-          lastName,
-        },
-        { transaction: t }
-      )
-
-      await t.commit()
+      await userRepo.setTransaction(t).create({
+        email,
+        password: hashedPassword,
+        firstName,
+        lastName,
+      })
+      if (!userRepo.isSuccess()) throw new Error(!userRepo.getError())
+      let userCreated = userRepo.getResult()
 
       userCreated = JSON.parse(JSON.stringify(userCreated))
+      await t.commit()
+
       delete userCreated.password
       const authToken = generateJWT(userCreated)
       userCreated['authToken'] = authToken
