@@ -21,4 +21,14 @@ module.exports = {
 
     return successResponse(res, data, 'Login successfully')
   },
+  signUp: async (req, res) => {
+    const { body } = req
+    const { error } = authValidations.validateSignUp(body)
+    if (error) return errorResponse(res, error.details[0].message, 400)
+
+    const [err, data] = await to(authService.signUp(body))
+    if (err) return errorResponse(res, err.message, 400)
+
+    return successResponse(res, data, 'Signup successfully')
+  },
 }

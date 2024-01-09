@@ -40,4 +40,39 @@ module.exports = {
     user['authToken'] = authToken
     return user
   },
+  signUp: async body => {
+    const t = await db.sequelize.transaction()
+    try {
+      const { firstName, lastName, email, password } = body
+      let userExistByEmail = await db.User.findOne({
+        where: { email },
+      })
+      if (userExistByEmail) throw new Error('An account using this email already exists')
+
+      const salt = await bcrypt.genSalt(10)
+      const hashedPassword = await bcrypt.hash(password, salt)
+
+      let userCreated = await db.User.create(
+        {
+          email,
+          password: hashedPassword,
+          firstName,
+          lastName,
+        },
+        { transaction: t }
+      )
+
+      await t.commit()
+
+      userCreated = JSON.parse(JSON.stringify(userCreated))
+      delete userCreated.password
+      const authToken = generateJWT(userCreated)
+      userCreated['authToken'] = authToken
+
+      return userCreated
+    } catch (e) {
+      await t.rollback()
+      throw new Error(e.message)
+    }
+  },
 }

@@ -38,6 +38,46 @@ router.post('/authenticate', authController.authenticate)
 
 /**
  * @swagger
+ * /api/v1/auth/signup:
+ *   post:
+ *     summary: Sign Up User
+ *     consumes:
+ *      - application/json
+ *     produces:
+ *      - application/json
+ *     tags:
+ *     - Auth
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *               - password
+ *               - firstName
+ *               - lastName
+ *             properties:
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *               firstName:
+ *                 type: string
+ *               lastName:
+ *                 type: string
+ *     operationId: signup
+ *     deprecated: false
+ *     responses:
+ *       '200':
+ *         description: ''
+ *         headers: {}
+ */
+router.post('/signup', authController.signUp)
+
+/**
+ * @swagger
  * /api/v1/auth/me:
  *   get:
  *     summary: Get My Profile
