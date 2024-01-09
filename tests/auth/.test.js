@@ -2,9 +2,9 @@ const request = require('supertest')
 const app = require('../../app')
 const { API_PREFIX } = require('../../config/app')
 
-const baseRoute = API_PREFIX + '/auth/'
+const baseRoute = API_PREFIX + '/auth'
 
-describe('POST /auth/authenticate', () => {
+describe(`POST ${baseRoute}/authenticate`, () => {
   it('Should return 400 for empty email or password', () => {
     return request(app).post(`${baseRoute}/authenticate`).expect(400)
   })
