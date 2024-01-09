@@ -7,7 +7,7 @@ const path = require('path')
 const authRoutes = require('./routes/v1/auth')
 const config = require('./config/app')
 
-const { PORT, CORS_ORIGIN, JWT_SECRET_KEY, NODE_ENV } = config
+const { PORT, CORS_ORIGIN, JWT_SECRET_KEY, NODE_ENV, API_PREFIX } = config
 
 const app = express()
 
@@ -31,10 +31,10 @@ app.use(express.json())
 app.use('/public', express.static(path.join(__dirname, 'public')))
 
 // Swagger Docs
-app.use(`${config.API_PREFIX}/docs`, swaggerUI.serve, swaggerUI.setup(swaggerV1))
+app.use(`${API_PREFIX}/docs`, swaggerUI.serve, swaggerUI.setup(swaggerV1))
 
 // Routes
-app.use(`${config.API_PREFIX}/auth`, authRoutes)
+app.use(`${API_PREFIX}/auth`, authRoutes)
 
 // Error boundary
 app.use((err, req, res, next) => {
