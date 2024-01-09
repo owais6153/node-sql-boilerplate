@@ -1,45 +1,27 @@
 const { NODE_ENV } = require('../../config/app')
 
 class RepositoryResponse {
-  _success
   _error
-  _result
+  _response
   constructor() {
-    this._success = false
     this._error = false
-    this._result = false
+    this._response = false
   }
 
   setError(err) {
-    this._success = false
     if (NODE_ENV !== 'production') this._error = err.message
-    else this.error = 'Some thing went wrong'
+    else this._error = 'Some thing went wrong'
+
+    throw new Error(this._error)
   }
 
-  setResult(response) {
-    this._result = response
+  setResponse(response) {
+    this._response = response
     this._error = false
-    this._success = true
   }
 
-  getResponse() {
-    return {
-      success: this._success,
-      error: this._error,
-      result: this._result,
-    }
-  }
-
-  isSuccess() {
-    return this._success
-  }
-
-  getError() {
-    return this._error
-  }
-
-  getResult() {
-    return this._result
+  getResponses() {
+    return this._response
   }
 }
 
@@ -60,27 +42,73 @@ class BaseRepository extends RepositoryResponse {
 
   async create(data) {
     try {
-      const res = await this._model.create(
+      const entity = await this._model.create(
         data,
         this._transaction ? { transaction: this._transaction } : {}
       )
-      this.setResult(res)
+      this.setResponse(entity)
     } catch (error) {
       this.setError(error)
     }
   }
   async findOne(attributes = {}) {
     try {
-      const res = await this._model.findOne(attributes)
-      this.setResult(res)
+      const entity = await this._model.findOne(attributes)
+      this.setResponse(entity)
     } catch (error) {
       this.setError(error)
     }
   }
   async findAll(attributes = {}) {
     try {
-      const res = await this._model.findAll(attributes)
-      this.setResult(res)
+      const entities = await this._model.findAll(attributes)
+      this.setResponse(entities)
+    } catch (error) {
+      this.setError(error)
+    }
+  }
+  async update(attributes = { id: 0 }, data) {
+    try {
+      const entities = await this._model.update(data, attributes)
+      this.setResponse(entities)
+    } catch (error) {
+      this.setError(error)
+    }
+  }
+  async delete(attributes = { id: 0 }) {
+    try {
+      const res = await this._model.destroy(attributes)
+      this.setResponse(res)
+    } catch (error) {
+      this.setError(error)
+    }
+  }
+  async count(attributes = {}) {
+    try {
+      const res = await this._model.count(attributes)
+      this.setResponse(res)
+    } catch (error) {
+      this.setError(error)
+    }
+  }
+  async paginate(pageNumber, pageSize, attributes = {}) {
+    try {
+      const offset = (pageNumber - 1) * pageSize
+
+      const { count, rows } = await this._model.findAndCountAll({
+        offset: Math.max(offset, 0),
+        limit: pageSize,
+        ...attributes,
+      })
+
+      const totalPages = Math.ceil(count / pageSize)
+
+      this.setResponse({
+        rows,
+        totalCount: count,
+        totalPages,
+        currentPage: pageNumber,
+      })
     } catch (error) {
       this.setError(error)
     }

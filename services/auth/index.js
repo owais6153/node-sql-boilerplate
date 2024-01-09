@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs')
-const db = require('../../models')
+const { sequelize, Post } = require('../../models')
 
 const UserRepository = require('../../repositories/user')
 const { generateJWT } = require('../../util/generate-jwt')
@@ -11,19 +11,19 @@ module.exports = {
     await userRepo.findOne({
       where: { id: userid },
       attributes: {
-        include: [[db.sequelize.fn('COUNT', db.sequelize.col('Posts.id')), 'postCount']],
+        include: [[sequelize.fn('COUNT', sequelize.col('Posts.id')), 'postCount']],
         exclude: ['password'],
       },
       include: [
         {
-          model: db.Post,
+          model: Post,
           attributes: [],
         },
       ],
       group: ['User.id'],
     })
-    if (!userRepo.isSuccess()) throw new Error(!userRepo.getError())
-    let user = userRepo.getResult()
+
+    let user = userRepo.getResponses()
     if (!user) throw new Error('User not exsists')
 
     return user
@@ -33,9 +33,8 @@ module.exports = {
     const userRepo = new UserRepository()
 
     await userRepo.findByEmail(email)
-    if (!userRepo.isSuccess()) throw new Error(!userRepo.getError())
 
-    let user = userRepo.getResult()
+    let user = userRepo.getResponses()
     if (!user) throw new Error('Wrong email or password')
 
     const isCorrectPassword = await bcrypt.compare(password, user.password)
@@ -50,15 +49,14 @@ module.exports = {
     return user
   },
   signUp: async body => {
-    const t = await db.sequelize.transaction()
+    const t = await sequelize.transaction()
     try {
       const { firstName, lastName, email, password } = body
       const userRepo = new UserRepository()
 
       await userRepo.findByEmail(email)
-      if (!userRepo.isSuccess()) throw new Error(!userRepo.getError())
 
-      let userExistByEmail = userRepo.getResult()
+      let userExistByEmail = userRepo.getResponses()
       if (userExistByEmail) throw new Error('An account using this email already exists')
 
       const salt = await bcrypt.genSalt(10)
@@ -70,8 +68,8 @@ module.exports = {
         firstName,
         lastName,
       })
-      if (!userRepo.isSuccess()) throw new Error(!userRepo.getError())
-      let userCreated = userRepo.getResult()
+
+      let userCreated = userRepo.getResponses()
 
       userCreated = JSON.parse(JSON.stringify(userCreated))
       await t.commit()
