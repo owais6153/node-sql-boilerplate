@@ -67,7 +67,7 @@ class BaseRepository extends RepositoryResponse {
       this.setError(error)
     }
   }
-  async update(attributes = { id: 0 }, data) {
+  async update(attributes = { where: { id: 0 } }, data) {
     try {
       const entities = await this._model.update(data, attributes)
       this.setResponse(entities)
@@ -75,7 +75,7 @@ class BaseRepository extends RepositoryResponse {
       this.setError(error)
     }
   }
-  async delete(attributes = { id: 0 }) {
+  async delete(attributes = { where: { id: 0 } }) {
     try {
       const res = await this._model.destroy(attributes)
       this.setResponse(res)
