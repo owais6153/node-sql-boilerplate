@@ -19,7 +19,7 @@ beforeAll(async () => {
   try {
     await sequelize.authenticate()
     const res = await request(app).post(`${baseRoute}/signup`).send(data)
-    authToken = res?.body?.data?.email
+    authToken = res?.body?.data?.authToken
   } catch (err) {
     console.error('Unable to connect to the database:', err)
     process.exit(1)
@@ -64,14 +64,7 @@ describe(`GET ${baseRoute}/me`, () => {
       .expect(400)
   })
   it('Should return 200 and user object', async () => {
-    const res = await request(app)
-      .get(`${baseRoute}/me`)
-      .send({
-        email: data.email,
-        password: data.password,
-      })
-      .set('x-auth-token', authToken)
-
+    const res = await request(app).get(`${baseRoute}/me`).set('x-auth-token', authToken)
     expect(res.statusCode).toBe(200)
     expect(res.body.data.email).toBe(data.email)
   })
