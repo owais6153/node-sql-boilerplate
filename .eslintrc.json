@@ -1,9 +1,11 @@
 {
   "env": {
     "es2021": true,
-    "node": true
+    "node": true,
+    "jest": true
   },
   "extends": ["eslint:recommended", "prettier"],
+  "plugins": ["jest"],
   "parserOptions": {
     "ecmaVersion": "latest"
   },

@@ -4,10 +4,10 @@ const morgan = require('morgan')
 const swaggerUI = require('swagger-ui-express')
 const swaggerV1 = require('./swagger/v1')
 const path = require('path')
-const authRoutes = require('./routes/v1/auth')
+const routes = require('./routes/v1')
 const config = require('./config/app')
 
-const { CORS_ORIGIN, NODE_ENV, API_PREFIX } = config
+const { CORS_ORIGIN, NODE_ENV, API_PREFIX, SWAGGER_DOCS_URL } = config
 
 const app = express()
 
@@ -31,10 +31,10 @@ app.use(express.json())
 app.use('/public', express.static(path.join(__dirname, 'public')))
 
 // Swagger Docs
-app.use(`${API_PREFIX}/docs`, swaggerUI.serve, swaggerUI.setup(swaggerV1))
+app.use(`${SWAGGER_DOCS_URL}`, swaggerUI.serve, swaggerUI.setup(swaggerV1))
 
 // Routes
-app.use(`${API_PREFIX}/auth`, authRoutes)
+app.use(`${API_PREFIX}`, routes)
 
 // Error boundary
 app.use((err, req, res, next) => {
