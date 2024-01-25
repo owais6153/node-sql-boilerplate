@@ -61,4 +61,13 @@ npm run lint:check
 # Feature Branches
 Merge branches to implement features listed below
 - Swagger Docs: feat/swagger-docs
- 
+
+## Note
+If you've created the repository without branches, or you want to get any specific feature branch without getting all branches then you can fetch a specific branch by running the below commands:
+```
+git remote add template <template_repository_url>
+git fetch template <template_repo_branch_name>
+git checkout <template_repo_branch_name>
+git push origin <template_repo_branch_name>
+```
+By running the above commands that specfic branch will pushed to your repo.
