@@ -61,6 +61,7 @@ npm run lint:check
 # Feature Branches
 Merge branches to implement features listed below
 - Swagger Docs: feat/swagger-docs
+- Twilio SMS: feat/setup-twilio
 
 ## Note
 If you've created the repository without branches, or you want to get any specific feature branch without getting all branches then you can fetch a specific branch by running the below commands:
