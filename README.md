@@ -43,6 +43,10 @@ npm start
 
 Navigate to `http://localhost:4040`
 
+- API Document endpoints
+
+  swagger Spec Endpoint : http://localhost:4040/api-docs
+
 # ES Lint and Prettier
 
 - Check if the formatting matches the Prettier’s rules by using:
