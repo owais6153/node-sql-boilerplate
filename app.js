@@ -1,13 +1,12 @@
 const express = require('express')
 const cors = require('cors')
 const morgan = require('morgan')
-const swaggerUI = require('swagger-ui-express')
-const swaggerV1 = require('./swagger/v1')
+
 const path = require('path')
 const routes = require('./routes/v1')
 const config = require('./config/app')
 
-const { CORS_ORIGIN, NODE_ENV, API_PREFIX, SWAGGER_DOCS_URL } = config
+const { CORS_ORIGIN, NODE_ENV, API_PREFIX } = config
 
 const app = express()
 
@@ -29,9 +28,6 @@ app.use(express.json())
 
 // Static Paths
 app.use('/public', express.static(path.join(__dirname, 'public')))
-
-// Swagger Docs
-app.use(`${SWAGGER_DOCS_URL}`, swaggerUI.serve, swaggerUI.setup(swaggerV1))
 
 // Routes
 app.use(`${API_PREFIX}`, routes)
