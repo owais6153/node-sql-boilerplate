@@ -8,11 +8,7 @@
 
 # Getting started
 
-- Clone the repository
-
-```
-git clone  <git lab template url> <project_name>
-```
+- Create repository from template
 
 - Create .env file on the root of project and populate it with values, for reference check .envExample file on the root of project
 
@@ -62,3 +58,7 @@ npm run format:write
 ```
 npm run lint:check
 ```
+# Feature Branches
+Merge branches to implement features listed below
+- Swagger Docs: feat/swagger-docs
+ 
