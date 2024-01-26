@@ -1,4 +1,6 @@
-# Node Boilerplate With SQL (Sequelize)
+# Node.js, Express.js Boilerplate With Sequelize ORM
+
+A template repository boilerplate for building RESTful APIs using Node.js, Express.js, and Sequelize and with sequelize-cli support. This template includes common feature specific branches to merge into your repository if needed.
 
 # Pre-requisites
 
@@ -44,31 +46,45 @@ Navigate to `http://localhost:4040`
 - Check if the formatting matches the Prettier’s rules by using:
 
 ```
-npm run format:check
+npm run format
 ```
 
 - Force the formatting by using this command:
 
 ```
-npm run format:write
+npm run format:fix
 ```
 
 - Lint your code with:
 
 ```
-npm run lint:check
+npm run lint
 ```
+
+- Force the linting by using this command:
+
+```
+npm run lint:fix
+```
+
 # Feature Branches
+
 Merge branches to implement features listed below
-- Swagger Docs: feat/swagger-docs
-- Twilio SMS: feat/setup-twilio
+
+- Swagger Docs: `feat/swagger-docs`
+- Twilio SMS: `feat/setup-twilio`
+- AWS S3 Bucket: `feat/AWS-S3-bucket`
+- Sockets: `feat/sockets`
 
 ## Note
+
 If you've created the repository without branches, or you want to get any specific feature branch without getting all branches then you can fetch a specific branch by running the below commands:
+
 ```
 git remote add template <template_repository_url>
 git fetch template <template_repo_branch_name>
 git checkout <template_repo_branch_name>
 git push origin <template_repo_branch_name>
 ```
+
 By running the above commands that specfic branch will pushed to your repo.
