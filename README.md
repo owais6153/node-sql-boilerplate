@@ -72,7 +72,7 @@ npm run lint:fix
 Merge branches to implement features listed below
 
 - Swagger Docs: `feat/swagger-docs`
-- Twilio SMS: `feat/setup-twilio`
+- Twilio SMS: `feat/twilio-SMS`
 - AWS S3 Bucket: `feat/AWS-S3-bucket`
 - Sockets: `feat/sockets`
 
