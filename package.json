@@ -6,9 +6,9 @@
   "license": "ISC",
   "description": "",
   "scripts": {
-    "test": "cross-env NODE_ENV=test jest ",
+    "test": "cross-env NODE_ENV=test jest  --detectOpenHandles",
     "test:watch": "cross-env NODE_ENV=test jest --watchAll --detectOpenHandles",
-    "test:ci": "cross-env NODE_ENV=test jest --testPathPattern=\"tests/ci/\"",
+    "test:ci": "cross-env NODE_ENV=test jest --testPathPattern=\"tests/ci/\" --detectOpenHandles",
     "start": "cross-env NODE_ENV=production node server.js ",
     "dev": "cross-env NODE_ENV=development nodemon server.js",
     "format": "prettier --check  --ignore-unknown .",

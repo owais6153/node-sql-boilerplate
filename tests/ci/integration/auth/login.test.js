@@ -44,7 +44,8 @@ describe(`POST ${baseRoute}/authenticate`, () => {
       email: data.email,
       password: data.password,
     })
-    return expect(res.statusCode).toBe(200) && expect(res.body.data.email).toBe(data.email)
+    expect(res.statusCode).toBe(200)
+    expect(res.body.data.email).toBe(data.email)
   })
 })
 
@@ -64,7 +65,8 @@ describe(`GET ${baseRoute}/me`, () => {
   })
   it('Should return 200 and user object', async () => {
     const res = await request(app).get(`${baseRoute}/me`).set('x-auth-token', authToken)
-   return expect(res.statusCode).toBe(200) && expect(res.body.data.email).toBe(data.email)
+    expect(res.statusCode).toBe(200)
+    expect(res.body.data.email).toBe(data.email)
   })
 })
 
