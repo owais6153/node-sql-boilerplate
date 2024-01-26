@@ -1,5 +1,8 @@
 # Node Boilerplate With SQL (Sequelize)
 
+A template repository boilerplate for building RESTful APIs using Node.js, Express.js, and Sequelize and with sequelize-cli support.
+This template includes common feature specific branches to merge into your repository if needed.
+
 # Pre-requisites
 
 - Install [Node.js](https://nodejs.org/en/) version 18.16.1
