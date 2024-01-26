@@ -1,0 +1,51 @@
+name: CI Jest Integration Test
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:latest
+        env:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: test_database
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '18.17.1'
+
+    - name: Install Dependencies
+      run: npm install --
+
+    - name: Set up Environment Variables
+      run: |
+        echo "PORT=4000" >> .env
+        echo "JWT_SECRET_KEY='This_is_JWT_Salt'" >> .env
+        echo "API_PREFIX=\"/api/v1\"" >> .env
+        echo "SWAGGER_DOCS_URL=\"/docs/v1\"" >> .env
+        echo "CORS_ORIGIN='https://example.com'" >> .env
+        echo "DB_HOST=\"127.0.0.1\"" >> .env
+        echo "DB_NAME=\"test_database\"" >> .env
+        echo "DB_USER=\"root\"" >> .env
+        echo "DB_PASSWORD=\"password\"" >> .env
+
+    - name: Database Migration
+      run: npx sequelize-cli db:migrate
+
+    - name: Run Tests
+      run: npm run test
+
+    - name: Cleanup
+      run: |
+        rm .env
