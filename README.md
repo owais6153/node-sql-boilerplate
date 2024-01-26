@@ -1,7 +1,6 @@
 # Node.js, Express.js Boilerplate With Sequelize ORM
 
-A template repository boilerplate for building RESTful APIs using Node.js, Express.js, and Sequelize and with sequelize-cli support.
-This template includes common feature specific branches to merge into your repository if needed.
+A template repository boilerplate for building RESTful APIs using Node.js, Express.js, and Sequelize and with sequelize-cli support. This template includes common feature specific branches to merge into your repository if needed.
 
 # Pre-requisites
 
@@ -47,28 +46,35 @@ Navigate to `http://localhost:4040`
 - Check if the formatting matches the Prettier’s rules by using:
 
 ```
-npm run format:check
+npm run format
 ```
 
 - Force the formatting by using this command:
 
 ```
-npm run format:write
+npm run format:fix
 ```
 
 - Lint your code with:
 
 ```
-npm run lint:check
+npm run lint
+```
+
+- Force the linting by using this command:
+
+```
+npm run lint:fix
 ```
 
 # Feature Branches
 
 Merge branches to implement features listed below
 
-- Swagger Docs: ```feat/swagger-docs```
-- Twilio SMS: ```feat/setup-twilio```
-- AWS S3 Bucket: ```feat/AWS-S3-bucket```
+- Swagger Docs: `feat/swagger-docs`
+- Twilio SMS: `feat/setup-twilio`
+- AWS S3 Bucket: `feat/AWS-S3-bucket`
+- Sockets: `feat/sockets`
 
 ## Note
 
