@@ -69,7 +69,10 @@ class BaseRepository extends RepositoryResponse {
   }
   async update(attributes = { where: { id: 0 } }, data) {
     try {
-      const entities = await this._model.update(data, attributes)
+      const entities = await this._model.update(
+        data,
+        this._transaction ? { ...attributes, transaction: this._transaction } : attributes
+      )
       this.setResponse(entities)
     } catch (error) {
       this.setError(error)
@@ -77,7 +80,9 @@ class BaseRepository extends RepositoryResponse {
   }
   async delete(attributes = { where: { id: 0 } }) {
     try {
-      const res = await this._model.destroy(attributes)
+      const res = await this._model.destroy(
+        this._transaction ? { ...attributes, transaction: this._transaction } : attributes
+      )
       this.setResponse(res)
     } catch (error) {
       this.setError(error)
