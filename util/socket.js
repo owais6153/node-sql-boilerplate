@@ -2,7 +2,7 @@ const { io } = require('../config/socket')
 
 const connectedUserSocketIDs = {}
 
-io.on('connection', async socket => {
+const onConnect = async socket => {
   const { id: userId } = socket.user
   console.log('new connection on socket => ', socket.id)
   if (userId) {
@@ -33,9 +33,9 @@ io.on('connection', async socket => {
       console.error('Socket Error:', error)
     }
   })
-})
+}
 
-function sendRealtimeDataToSpecificUser(eventName, userId, data) {
+const sendRealtimeDataToSpecificUser = (eventName, userId, data) => {
   const userSocketID = connectedUserSocketIDs[userId]
   if (userSocketID) {
     console.log(
@@ -46,11 +46,17 @@ function sendRealtimeDataToSpecificUser(eventName, userId, data) {
     io.to(userSocketID).emit(eventName, data)
   }
 }
-function sendRealtimeDataToAll(eventName, userId, data) {
+const sendRealtimeDataToAll = (eventName, userId, data) => {
   console.log(
     `emit: sending data to userId: ${userId} on event: ${eventName} with data: ${JSON.stringify(
       data
     )}`
   )
   io.emit(eventName, data)
+}
+
+module.exports = {
+  sendRealtimeDataToAll,
+  sendRealtimeDataToSpecificUser,
+  onConnect,
 }

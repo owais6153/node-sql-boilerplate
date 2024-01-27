@@ -11,7 +11,6 @@ const server = app.listen(PORT, async function () {
   try {
     await sequelize.authenticate()
     // Initialize Socket
-    socketInit(server)
   } catch (err) {
     console.error('Unable to connect to the database:', err)
     process.exit(1)
@@ -22,3 +21,5 @@ if (!JWT_SECRET_KEY) {
   console.error('FATAL ERROR: JWT_SECRET_KEY is not defined.')
   process.exit(1)
 }
+
+socketInit(server)
