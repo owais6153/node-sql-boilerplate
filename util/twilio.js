@@ -16,10 +16,6 @@ module.exports = {
           to: `+${toPhoneNumber}`,
         })
         .then(message => console.log('Message Sent: ', message))
-        .catch(err => {
-          if (shouldThrowError) throw new Error(err)
-          console.log('Error sending message from Twilio: ', err)
-        })
     } catch (error) {
       if (shouldThrowError) throw new Error(error)
       console.log('Error sending message from twilio: ', error)
