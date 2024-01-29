@@ -1,7 +1,7 @@
 require('dotenv').config()
 const twilio = require('../config/twilio')
 module.exports = {
-  sendSMS: (toPhoneNumber, message, shouldThrowError = false) => {
+  sendSMS: async (toPhoneNumber, message, shouldThrowError = false) => {
     try {
       console.log({
         body: message,
@@ -9,7 +9,7 @@ module.exports = {
         to: `+${toPhoneNumber}`,
       })
 
-      twilio.messages
+      await twilio.messages
         .create({
           body: message,
           from: process.env.TWILIO_FROM_PHONE,
