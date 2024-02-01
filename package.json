@@ -4,7 +4,7 @@
   "main": "server.js",
   "author": "",
   "license": "ISC",
-  "description": "",
+  "description": "A template repository boilerplate for building RESTful APIs using Node.js, Express.js, and Sequelize and Sequelize-cli, With branches for additional features",
   "engines": {
     "node": ">=18.17.1"
   },
