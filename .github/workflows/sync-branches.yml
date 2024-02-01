@@ -14,10 +14,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Sync branches
+      - name: Update main branch
         run: |
           git fetch origin
-          git merge origin/main
+          git checkout main
+          git pull origin main
+
+      - name: Sync branches
+        run: |
           for branch in $(git branch --format='%(refname:short)' | grep -v "main"); do
             git checkout "$branch"
             git merge main --no-edit
