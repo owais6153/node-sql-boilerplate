@@ -75,6 +75,7 @@ Merge branches to implement features listed below
 
 - Swagger Docs: `feat/swagger-docs`
 - Twilio SMS: `feat/twilio-SMS`
+- Sendgrid Emai: `feat/sendgrid-mail`
 - AWS S3 Bucket: `feat/AWS-S3-bucket`
 - Sockets: `feat/sockets`
 
