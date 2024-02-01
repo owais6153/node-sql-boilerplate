@@ -1,0 +1,25 @@
+name: Sync Branches
+
+on:
+  workflow_dispatch:
+    permissions:
+      users:
+        - owais6153     
+
+jobs:
+  sync-branches:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Sync branches
+        run: |
+          git fetch origin
+          git merge origin/main
+          for branch in $(git branch --format='%(refname:short)' | grep -v "main"); do
+            git checkout "$branch"
+            git merge main --no-edit
+          done
+          git push origin --all
