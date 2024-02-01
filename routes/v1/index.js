@@ -5,7 +5,7 @@ const sendMail = require('../../util/sendgrid-mail')
 
 router.use(`/auth`, authRoutes)
 
-router.get('/test-mail', async (req, res) => {
+router.get('/test-sendgrid', async (req, res) => {
   try {
     await sendMail(
       templateIDs.welcome,
