@@ -18,6 +18,7 @@ jobs:
         run: |
           for branch in $(git branch --format='%(refname:short)' | grep -v "main"); do
             git checkout "$branch"
-            git merge main 
+            git pull origin main
+            git push origin "$branch"
           done
-          git push --all origin
+
