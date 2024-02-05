@@ -5,9 +5,16 @@ class UserRepository extends BaseRepository {
   constructor() {
     super(User)
   }
-  async findByEmail(email) {
+  async findByEmail(email, attributes = {}) {
     await this.findOne({
       where: { email },
+      ...attributes,
+    })
+  }
+  async findByID(id, attributes = {}) {
+    await this.findOne({
+      where: { id },
+      ...attributes,
     })
   }
 }

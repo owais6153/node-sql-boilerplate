@@ -8,8 +8,7 @@ module.exports = {
   me: async userid => {
     const userRepo = new UserRepository()
 
-    await userRepo.findOne({
-      where: { id: userid },
+    await userRepo.findByID(userid, {
       attributes: {
         include: [[sequelize.fn('COUNT', sequelize.col('Posts.id')), 'postCount']],
         exclude: ['password'],
@@ -45,23 +44,23 @@ module.exports = {
     delete user['password']
     const jwtPayload = { ...user }
     const authToken = generateJWT(jwtPayload)
-    user['authToken'] = authToken
+    user['x-auth-token'] = authToken
     return user
   },
   signUp: async body => {
     const t = await sequelize.transaction()
+    const { firstName, lastName, email, password } = body
+    const userRepo = new UserRepository()
+
+    await userRepo.findByEmail(email)
+
+    let userExistByEmail = userRepo.getResponses()
+    if (userExistByEmail) throw new Error('An account using this email already exists')
+
+    const salt = await bcrypt.genSalt(10)
+    const hashedPassword = await bcrypt.hash(password, salt)
+
     try {
-      const { firstName, lastName, email, password } = body
-      const userRepo = new UserRepository()
-
-      await userRepo.findByEmail(email)
-
-      let userExistByEmail = userRepo.getResponses()
-      if (userExistByEmail) throw new Error('An account using this email already exists')
-
-      const salt = await bcrypt.genSalt(10)
-      const hashedPassword = await bcrypt.hash(password, salt)
-
       await userRepo.setTransaction(t).create({
         email,
         password: hashedPassword,
@@ -76,7 +75,7 @@ module.exports = {
 
       delete userCreated.password
       const authToken = generateJWT(userCreated)
-      userCreated['authToken'] = authToken
+      userCreated['x-auth-token'] = authToken
 
       return userCreated
     } catch (e) {

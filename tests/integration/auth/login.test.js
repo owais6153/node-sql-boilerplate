@@ -19,7 +19,7 @@ beforeAll(async () => {
   try {
     await sequelize.authenticate()
     const res = await request(app).post(`${baseRoute}/signup`).send(data)
-    authToken = res?.body?.data?.authToken
+    authToken = res?.body?.data?.['x-auth-token']
   } catch (err) {
     console.error('Unable to connect to the database:', err)
     process.exit(1)
@@ -39,6 +39,16 @@ describe(`POST ${baseRoute}/authenticate`, () => {
       })
       .expect(400)
   })
+  it('Should return 406 for already login', () => {
+    return request(app)
+      .post(`${baseRoute}/authenticate`)
+      .send({
+        email: 'wrongemail@test.com',
+        password: 'secret123',
+      })
+      .set('x-auth-token', authToken)
+      .expect(406)
+  })
   it('Should return 200 user object for correct email and password', async () => {
     const res = await request(app).post(`${baseRoute}/authenticate`).send({
       email: data.email,
@@ -50,10 +60,10 @@ describe(`POST ${baseRoute}/authenticate`, () => {
 })
 
 describe(`GET ${baseRoute}/me`, () => {
-  it('Should return 400 for unauthorized request', () => {
-    return request(app).get(`${baseRoute}/me`).expect(400)
+  it('Should return 401 for unauthorized request', () => {
+    return request(app).get(`${baseRoute}/me`).expect(401)
   })
-  it('Should return 400 for invalid authToken', () => {
+  it('Should return 401 for invalid authToken', () => {
     return request(app)
       .get(`${baseRoute}/me`)
       .send({
@@ -61,7 +71,7 @@ describe(`GET ${baseRoute}/me`, () => {
         password: 'secret123',
       })
       .set('x-auth-token', authToken + 'invalid')
-      .expect(400)
+      .expect(401)
   })
   it('Should return 200 and user object', async () => {
     const res = await request(app).get(`${baseRoute}/me`).set('x-auth-token', authToken)
