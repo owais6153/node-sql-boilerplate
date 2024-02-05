@@ -14,6 +14,10 @@ A template repository boilerplate for building RESTful APIs using Node.js, Expre
 
 - Create .env file on the root of project and populate it with values, for reference check .envExample file on the root of project
 
+```
+ cp .env.example .env
+```
+
 - Install dependencies
 
 ```
