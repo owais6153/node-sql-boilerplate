@@ -37,7 +37,13 @@ npx sequelize db:migrate
 npx sequelize db:seed:all
 ```
 
-- Build and run the project
+- Start Project in Development Env
+
+```
+npm run dev
+```
+
+- Start Project in Production Env
 
 ```
 npm start
