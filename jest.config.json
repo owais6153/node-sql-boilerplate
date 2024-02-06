@@ -11,6 +11,7 @@
     "@services/(.*)": "<rootDir>/services/$1",
     "@tests/(.*)": "<rootDir>/tests/$1",
     "@util/(.*)": "<rootDir>/util/$1",
-    "@validations/(.*)": "<rootDir>/validations/$1"
+    "@validations/(.*)": "<rootDir>/validations/$1",
+    "@jobs/(.*)": "<rootDir>/jobs/$1"
   }
 }

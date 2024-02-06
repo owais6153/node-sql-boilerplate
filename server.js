@@ -1,4 +1,5 @@
 require('module-alias/register')
+require('@root/cron-job')
 const config = require('@config/app')
 const app = require('@root/app')
 const { sequelize } = require('@models')
