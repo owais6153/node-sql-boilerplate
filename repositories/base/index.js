@@ -1,4 +1,4 @@
-const { NODE_ENV } = require('../../config/app')
+const { NODE_ENV } = require('@config/app')
 
 class RepositoryResponse {
   _error

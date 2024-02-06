@@ -30,6 +30,7 @@
     "express": "^4.18.2",
     "joi": "^17.11.0",
     "jsonwebtoken": "^9.0.2",
+    "module-alias": "^2.2.3",
     "moment": "^2.29.4",
     "morgan": "^1.10.0",
     "mysql2": "^3.6.5",
@@ -47,5 +48,18 @@
     "prettier": "^3.1.1",
     "sequelize-cli": "^6.6.2",
     "supertest": "^6.3.3"
+  },
+  "_moduleAliases": {
+    "@root": ".",
+    "@config": "./config",
+    "@controllers": "./controllers",
+    "@middleware": "./middleware",
+    "@models": "./models",
+    "@repositories": "./repositories",
+    "@routes": "./routes",
+    "@services": "./services",
+    "@tests": "./tests",
+    "@util": "./util",
+    "@validations": "./validations"
   }
 }

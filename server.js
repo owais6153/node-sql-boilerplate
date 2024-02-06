@@ -1,6 +1,7 @@
-const config = require('./config/app')
-const app = require('./app')
-const { sequelize } = require('./models')
+require('module-alias/register')
+const config = require('@config/app')
+const app = require('@root/app')
+const { sequelize } = require('@models/')
 
 const { PORT, JWT_SECRET_KEY, NODE_ENV } = config
 

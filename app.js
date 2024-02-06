@@ -3,8 +3,8 @@ const cors = require('cors')
 const morgan = require('morgan')
 
 const path = require('path')
-const routes = require('./routes/v1')
-const config = require('./config/app')
+const routes = require('@routes/v1')
+const config = require('@config/app')
 
 const { CORS_ORIGIN, NODE_ENV, API_PREFIX } = config
 

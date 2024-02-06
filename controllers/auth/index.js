@@ -1,7 +1,7 @@
-const authService = require('../../services/auth')
-const { to } = require('../../util/error-handler')
-const { successResponse, errorResponse } = require('../../util/responses')
-const authValidations = require('../../validations/auth')
+const authService = require('@services/auth')
+const { to } = require('@util/error-handler')
+const { successResponse, errorResponse } = require('@util/responses')
+const authValidations = require('@validations/auth')
 
 module.exports = {
   me: async (req, res) => {
