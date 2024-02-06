@@ -88,6 +88,7 @@ Merge branches to implement features listed below
 - Sendgrid Emai: `feat/sendgrid-mail`
 - AWS S3 Bucket: `feat/AWS-S3-bucket`
 - Sockets: `feat/sockets`
+- Node Cron: `feat/node-cron`
 
 ### CI (Continues Integration)
 
