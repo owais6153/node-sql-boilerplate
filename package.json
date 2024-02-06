@@ -20,7 +20,7 @@
     "prepare": "husky install"
   },
   "lint-staged": {
-    "*/**": "npm run format:fix"
+    "*/**": "prettier --write  --ignore-unknown "
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
