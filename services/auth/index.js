@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs')
-const { sequelize, Post } = require('@models/')
+const { sequelize, Post } = require('@models')
 
 const UserRepository = require('@repositories/user')
 const { generateJWT } = require('@util/generate-jwt')

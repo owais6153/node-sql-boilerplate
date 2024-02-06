@@ -1,7 +1,7 @@
 const request = require('supertest')
 const app = require('@root/app')
 const { API_PREFIX } = require('@config/app')
-const { sequelize } = require('@models/')
+const { sequelize } = require('@models')
 const UserRepository = require('@repositories/user')
 
 const baseRoute = API_PREFIX + '/auth'

@@ -4,6 +4,7 @@
     "@config/(.*)": "<rootDir>/config/$1",
     "@controllers/(.*)": "<rootDir>/controllers/$1",
     "@middleware/(.*)": "<rootDir>/middleware/$1",
+    "@models": "<rootDir>/models/index",
     "@models/(.*)": "<rootDir>/models/$1",
     "@repositories/(.*)": "<rootDir>/repositories/$1",
     "@routes/(.*)": "<rootDir>/routes/$1",
